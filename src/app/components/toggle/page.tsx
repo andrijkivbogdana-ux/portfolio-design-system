@@ -7,29 +7,56 @@ import { CodeBlock } from "@/components/CodeBlock";
 
 export default function TogglePage() {
   const [on, setOn] = useState(false);
-  const [labeled, setLabeled] = useState(true);
+  const [checked, setChecked] = useState(true);
 
   return (
-    <div>
-      <h1 className="font-display font-bold text-4xl tracking-tight mb-2">Toggle</h1>
-      <p className="text-ink-secondary text-sm mb-10">
-        Boolean switch for on/off states.
-      </p>
+    <>
+      <div className="mb-12">
+        <p className="text-xs font-body font-medium tracking-widest uppercase text-acid mb-3">
+          FORMS &amp; INPUT
+        </p>
+        <h1 className="font-display font-bold text-4xl tracking-tight text-ink-primary mb-4">
+          Toggle
+        </h1>
+        <p className="text-ink-secondary max-w-content leading-relaxed">
+          On/off switch for boolean settings. Uses the mist accent color for
+          the active state.
+        </p>
+      </div>
 
-      <ComponentPreview label="Default">
-        <Toggle checked={on} onChange={setOn} />
+      <ComponentPreview label="Off state">
+        <Toggle checked={on} onChange={setOn} label="Enable notifications" />
       </ComponentPreview>
 
-      <ComponentPreview label="With Label">
-        <Toggle checked={labeled} onChange={setLabeled} label="Enable notifications" />
+      <CodeBlock
+        code={`<Toggle
+  checked={on}
+  onChange={setOn}
+  label="Enable notifications"
+/>`}
+      />
+
+      <ComponentPreview label="On state">
+        <Toggle checked={checked} onChange={setChecked} label="Auto-review new uploads" />
       </ComponentPreview>
+
+      <CodeBlock
+        code={`<Toggle
+  checked={true}
+  onChange={setChecked}
+  label="Auto-review new uploads"
+/>`}
+      />
 
       <ComponentPreview label="Disabled">
-        <Toggle checked={false} onChange={() => {}} disabled label="Disabled off" />
-        <Toggle checked={true} onChange={() => {}} disabled label="Disabled on" />
+        <Toggle checked={false} disabled label="Premium feature" />
+        <Toggle checked={true} disabled label="Always on" />
       </ComponentPreview>
 
-      <CodeBlock code={`<Toggle checked={value} onChange={setValue} label="Notifications" />`} />
-    </div>
+      <CodeBlock
+        code={`<Toggle checked={false} disabled label="Premium feature" />
+<Toggle checked={true} disabled label="Always on" />`}
+      />
+    </>
   );
 }

@@ -1,39 +1,107 @@
+"use client";
+
 import { Select } from "@/components/Select";
 import { ComponentPreview } from "@/components/ComponentPreview";
 import { CodeBlock } from "@/components/CodeBlock";
 
-const OPTIONS = [
-  { value: "ui", label: "UI/UX Design" },
-  { value: "brand", label: "Brand Design" },
-  { value: "motion", label: "Motion Design" },
-  { value: "product", label: "Product Design" },
+const reviewTypes = [
+  { value: "full", label: "Full Review" },
+  { value: "quick", label: "Quick Scan" },
+  { value: "accessibility", label: "Accessibility Audit" },
 ];
 
 export default function SelectPage() {
   return (
-    <div>
-      <h1 className="font-display font-bold text-4xl tracking-tight mb-2">Select</h1>
-      <p className="text-ink-secondary text-sm mb-10">
-        Native select with custom styling and chevron icon.
-      </p>
+    <>
+      <div className="mb-12">
+        <p className="text-xs font-body font-medium tracking-widest uppercase text-acid mb-3">
+          FORMS &amp; INPUT
+        </p>
+        <h1 className="font-display font-bold text-4xl tracking-tight text-ink-primary mb-4">
+          Select
+        </h1>
+        <p className="text-ink-secondary max-w-content leading-relaxed">
+          Dropdown picker for choosing between predefined options. Includes
+          Lucide chevron icon, label, placeholder, and error support.
+        </p>
+      </div>
 
-      <ComponentPreview label="Default">
-        <Select label="Specialization" options={OPTIONS} placeholder="Choose one..." helperText="Select your primary skill." className="w-full max-w-sm" />
+      <ComponentPreview label="Default with placeholder">
+        <div className="w-full max-w-sm">
+          <Select
+            options={reviewTypes}
+            placeholder="Choose review type"
+            defaultValue=""
+          />
+        </div>
       </ComponentPreview>
 
-      <ComponentPreview label="Error">
-        <Select label="Specialization" options={OPTIONS} placeholder="Choose one..." error="Please select an option." className="w-full max-w-sm" />
+      <CodeBlock
+        code={`<Select
+  options={[
+    { value: "full", label: "Full Review" },
+    { value: "quick", label: "Quick Scan" },
+    { value: "accessibility", label: "Accessibility Audit" },
+  ]}
+  placeholder="Choose review type"
+/>`}
+      />
+
+      <ComponentPreview label="With label">
+        <div className="w-full max-w-sm">
+          <Select
+            label="Review type"
+            id="review-type"
+            options={reviewTypes}
+            placeholder="Choose review type"
+            defaultValue=""
+          />
+        </div>
       </ComponentPreview>
+
+      <CodeBlock
+        code={`<Select
+  label="Review type"
+  options={reviewTypes}
+  placeholder="Choose review type"
+/>`}
+      />
+
+      <ComponentPreview label="Error state">
+        <div className="w-full max-w-sm">
+          <Select
+            label="Review type"
+            id="review-error"
+            options={reviewTypes}
+            error="Please select a review type"
+            placeholder="Choose review type"
+            defaultValue=""
+          />
+        </div>
+      </ComponentPreview>
+
+      <CodeBlock
+        code={`<Select
+  label="Review type"
+  options={reviewTypes}
+  error="Please select a review type"
+/>`}
+      />
 
       <ComponentPreview label="Disabled">
-        <Select label="Specialization" options={OPTIONS} disabled className="w-full max-w-sm" />
+        <div className="w-full max-w-sm">
+          <Select
+            label="Review type"
+            id="review-disabled"
+            options={reviewTypes}
+            placeholder="Choose review type"
+            defaultValue=""
+            disabled
+          />
+        </div>
       </ComponentPreview>
 
-      <CodeBlock code={`<Select
-  label="Specialization"
-  options={[{ value: "ui", label: "UI/UX Design" }]}
-  placeholder="Choose one..."
-/>`} />
-    </div>
+      <CodeBlock code={`<Select options={reviewTypes} disabled />`} />
+    </>
   );
 }

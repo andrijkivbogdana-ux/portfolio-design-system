@@ -1,18 +1,26 @@
 import { cn } from "@/lib/utils";
+import { type ReactNode } from "react";
 
-export interface ComponentPreviewProps {
+interface ComponentPreviewProps {
   label: string;
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
 }
 
-export function ComponentPreview({ label, children, className }: ComponentPreviewProps) {
+export function ComponentPreview({
+  label,
+  children,
+  className,
+}: ComponentPreviewProps) {
   return (
-    <div className={cn("mb-10", className)}>
-      <p className="text-xs font-body font-medium tracking-widest uppercase text-acid mb-3">
-        {label}
-      </p>
-      <div className="bg-surface-raised border border-border rounded-xl p-8 flex items-center gap-4 flex-wrap">
+    <div className="mb-10">
+      <p className="text-xs font-mono text-ink-muted mb-3">{label}</p>
+      <div
+        className={cn(
+          "bg-surface-raised border border-border rounded-xl p-8 flex flex-wrap items-center gap-4",
+          className
+        )}
+      >
         {children}
       </div>
     </div>

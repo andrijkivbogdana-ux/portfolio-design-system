@@ -4,37 +4,47 @@ import { CodeBlock } from "@/components/CodeBlock";
 
 export default function DividerPage() {
   return (
-    <div>
-      <h1 className="font-display font-bold text-4xl tracking-tight mb-2">Divider</h1>
-      <p className="text-ink-secondary text-sm mb-10">
-        Visual separator for content sections. Horizontal, vertical, and labeled.
-      </p>
+    <>
+      <div className="mb-12">
+        <p className="text-xs font-body font-medium tracking-widest uppercase text-acid mb-3">
+          FEEDBACK &amp; DATA
+        </p>
+        <h1 className="font-display font-bold text-4xl tracking-tight text-ink-primary mb-4">
+          Divider
+        </h1>
+        <p className="text-ink-secondary max-w-content leading-relaxed">
+          Visual separator for content sections. Horizontal or vertical
+          orientation, with optional label.
+        </p>
+      </div>
 
-      <ComponentPreview label="Horizontal">
-        <div className="w-full space-y-4">
-          <p className="text-sm text-ink-secondary">Content above</p>
-          <Divider />
-          <p className="text-sm text-ink-secondary">Content below</p>
-        </div>
+      <ComponentPreview label="Horizontal (default)" className="flex-col items-stretch">
+        <Divider />
       </ComponentPreview>
 
-      <ComponentPreview label="With Label">
-        <div className="w-full">
-          <Divider label="OR" />
-        </div>
+      <CodeBlock code={`<Divider />`} />
+
+      <ComponentPreview label="With label" className="flex-col items-stretch">
+        <Divider label="or" />
       </ComponentPreview>
+
+      <CodeBlock code={`<Divider label="or" />`} />
 
       <ComponentPreview label="Vertical">
         <div className="flex items-center gap-4 h-10">
-          <span className="text-sm text-ink-secondary">Left</span>
+          <span className="text-sm text-ink-secondary">Section A</span>
           <Divider orientation="vertical" />
-          <span className="text-sm text-ink-secondary">Right</span>
+          <span className="text-sm text-ink-secondary">Section B</span>
         </div>
       </ComponentPreview>
 
-      <CodeBlock code={`<Divider />
-<Divider label="OR" />
-<Divider orientation="vertical" />`} />
-    </div>
+      <CodeBlock
+        code={`<div className="flex items-center gap-4 h-10">
+  <span>Section A</span>
+  <Divider orientation="vertical" />
+  <span>Section B</span>
+</div>`}
+      />
+    </>
   );
 }

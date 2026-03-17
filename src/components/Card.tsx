@@ -1,33 +1,31 @@
 import { cn } from "@/lib/utils";
+import { type HTMLAttributes } from "react";
 
-type CardVariant = "default" | "interactive" | "featured";
+type Variant = "default" | "interactive" | "featured";
 
-export interface CardProps {
-  variant?: CardVariant;
-  className?: string;
-  children: React.ReactNode;
+interface CardProps extends HTMLAttributes<HTMLDivElement> {
+  variant?: Variant;
 }
 
-const variantStyles: Record<CardVariant, string> = {
-  default: "",
-  interactive:
-    "hover:border-border-strong hover:shadow-md transition-all duration-DEFAULT cursor-pointer",
-  featured: "border-border-accent shadow-glow",
+const base = "bg-surface-raised rounded-xl border border-border p-6";
+
+const variants: Record<Variant, string> = {
+  default: base,
+  interactive: cn(
+    base,
+    "hover:border-border-strong hover:shadow-md transition-all duration-300"
+  ),
+  featured: cn(base, "border-border-accent shadow-glow"),
 };
 
 export function Card({
   variant = "default",
   className,
   children,
+  ...props
 }: CardProps) {
   return (
-    <div
-      className={cn(
-        "bg-surface-raised rounded-xl border border-border p-6",
-        variantStyles[variant],
-        className
-      )}
-    >
+    <div className={cn(variants[variant], className)} {...props}>
       {children}
     </div>
   );

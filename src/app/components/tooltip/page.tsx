@@ -7,30 +7,43 @@ import { CodeBlock } from "@/components/CodeBlock";
 
 export default function TooltipPage() {
   return (
-    <div>
-      <h1 className="font-display font-bold text-4xl tracking-tight mb-2">Tooltip</h1>
-      <p className="text-ink-secondary text-sm mb-10">
-        Contextual information on hover/focus with GSAP animation.
-      </p>
+    <>
+      <div className="mb-12">
+        <p className="text-xs font-body font-medium tracking-widest uppercase text-acid mb-3">
+          OVERLAYS &amp; NAV
+        </p>
+        <h1 className="font-display font-bold text-4xl tracking-tight text-ink-primary mb-4">
+          Tooltip
+        </h1>
+        <p className="text-ink-secondary max-w-content leading-relaxed">
+          Contextual hover info. Appears after a 200ms delay, uses GSAP for
+          fade animation. Top and bottom placement.
+        </p>
+      </div>
 
-      <ComponentPreview label="Placements">
-        <Tooltip content="Top tooltip" placement="top">
-          <Button variant="ghost" size="sm">Top</Button>
-        </Tooltip>
-        <Tooltip content="Bottom tooltip" placement="bottom">
-          <Button variant="ghost" size="sm">Bottom</Button>
-        </Tooltip>
-        <Tooltip content="Left tooltip" placement="left">
-          <Button variant="ghost" size="sm">Left</Button>
-        </Tooltip>
-        <Tooltip content="Right tooltip" placement="right">
-          <Button variant="ghost" size="sm">Right</Button>
+      <ComponentPreview label="Top placement (default)">
+        <Tooltip content="Start a new portfolio review">
+          <Button variant="ghost">Hover me</Button>
         </Tooltip>
       </ComponentPreview>
 
-      <CodeBlock code={`<Tooltip content="Helpful text" placement="top">
-  <Button>Hover me</Button>
-</Tooltip>`} />
-    </div>
+      <CodeBlock
+        code={`<Tooltip content="Start a new portfolio review">
+  <Button variant="ghost">Hover me</Button>
+</Tooltip>`}
+      />
+
+      <ComponentPreview label="Bottom placement">
+        <Tooltip content="View review history" placement="bottom">
+          <Button variant="ghost">Hover me (bottom)</Button>
+        </Tooltip>
+      </ComponentPreview>
+
+      <CodeBlock
+        code={`<Tooltip content="View review history" placement="bottom">
+  <Button variant="ghost">Hover me</Button>
+</Tooltip>`}
+      />
+    </>
   );
 }

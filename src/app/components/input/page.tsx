@@ -1,29 +1,80 @@
+"use client";
+
 import { Input } from "@/components/Input";
 import { ComponentPreview } from "@/components/ComponentPreview";
 import { CodeBlock } from "@/components/CodeBlock";
 
 export default function InputPage() {
   return (
-    <div>
-      <h1 className="font-display font-bold text-4xl tracking-tight mb-2">Input</h1>
-      <p className="text-ink-secondary text-sm mb-10">
-        Text input with label, helper text, and error states.
-      </p>
+    <>
+      <div className="mb-12">
+        <p className="text-xs font-body font-medium tracking-widest uppercase text-acid mb-3">
+          FORMS &amp; INPUT
+        </p>
+        <h1 className="font-display font-bold text-4xl tracking-tight text-ink-primary mb-4">
+          Input
+        </h1>
+        <p className="text-ink-secondary max-w-content leading-relaxed">
+          Text field for URLs, search queries, and user names. Supports label,
+          helper text, error state, and disabled state.
+        </p>
+      </div>
 
       <ComponentPreview label="Default">
-        <Input label="Email" placeholder="you@example.com" helperText="We'll never share your email." className="w-full max-w-sm" />
+        <div className="w-full max-w-sm">
+          <Input placeholder="Enter portfolio URL..." />
+        </div>
       </ComponentPreview>
 
-      <ComponentPreview label="Error">
-        <Input label="Email" placeholder="you@example.com" error="Please enter a valid email address." className="w-full max-w-sm" />
+      <CodeBlock code={`<Input placeholder="Enter portfolio URL..." />`} />
+
+      <ComponentPreview label="With label and helper text">
+        <div className="w-full max-w-sm">
+          <Input
+            label="Portfolio URL"
+            id="url"
+            placeholder="https://example.com"
+            helperText="We'll analyze your live site"
+          />
+        </div>
       </ComponentPreview>
+
+      <CodeBlock
+        code={`<Input
+  label="Portfolio URL"
+  id="url"
+  placeholder="https://example.com"
+  helperText="We'll analyze your live site"
+/>`}
+      />
+
+      <ComponentPreview label="Error state">
+        <div className="w-full max-w-sm">
+          <Input
+            label="Portfolio URL"
+            id="url-error"
+            placeholder="https://example.com"
+            error="Please enter a valid URL"
+            defaultValue="not-a-url"
+          />
+        </div>
+      </ComponentPreview>
+
+      <CodeBlock
+        code={`<Input
+  label="Portfolio URL"
+  error="Please enter a valid URL"
+  defaultValue="not-a-url"
+/>`}
+      />
 
       <ComponentPreview label="Disabled">
-        <Input label="Email" placeholder="you@example.com" disabled className="w-full max-w-sm" />
+        <div className="w-full max-w-sm">
+          <Input label="Portfolio URL" id="url-disabled" placeholder="https://example.com" disabled />
+        </div>
       </ComponentPreview>
 
-      <CodeBlock code={`<Input label="Email" placeholder="you@example.com" helperText="Helper text" />
-<Input label="Email" error="Invalid email" />`} />
-    </div>
+      <CodeBlock code={`<Input label="Portfolio URL" placeholder="https://example.com" disabled />`} />
+    </>
   );
 }

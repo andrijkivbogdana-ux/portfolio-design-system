@@ -1,15 +1,14 @@
 import { cn } from "@/lib/utils";
+import { type HTMLAttributes } from "react";
 
-type BadgeVariant = "muted" | "acid" | "mist" | "success" | "warning" | "error";
+type Variant = "default" | "acid" | "mist" | "success" | "warning" | "error";
 
-export interface BadgeProps {
-  variant?: BadgeVariant;
-  className?: string;
-  children: React.ReactNode;
+interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
+  variant?: Variant;
 }
 
-const variantStyles: Record<BadgeVariant, string> = {
-  muted: "bg-surface-subtle text-ink-secondary",
+const variants: Record<Variant, string> = {
+  default: "bg-surface-subtle text-ink-secondary",
   acid: "bg-acid/10 text-acid",
   mist: "bg-mist/10 text-mist",
   success: "bg-success/10 text-success",
@@ -17,14 +16,20 @@ const variantStyles: Record<BadgeVariant, string> = {
   error: "bg-error/10 text-error",
 };
 
-export function Badge({ variant = "muted", className, children }: BadgeProps) {
+export function Badge({
+  variant = "default",
+  className,
+  children,
+  ...props
+}: BadgeProps) {
   return (
     <span
       className={cn(
         "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-body font-medium",
-        variantStyles[variant],
+        variants[variant],
         className
       )}
+      {...props}
     >
       {children}
     </span>

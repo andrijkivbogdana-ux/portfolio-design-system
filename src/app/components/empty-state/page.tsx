@@ -1,4 +1,4 @@
-import { FolderOpen, Search } from "lucide-react";
+import { FileSearch, FolderOpen, Star } from "lucide-react";
 import { EmptyState } from "@/components/EmptyState";
 import { Button } from "@/components/Button";
 import { ComponentPreview } from "@/components/ComponentPreview";
@@ -6,39 +6,68 @@ import { CodeBlock } from "@/components/CodeBlock";
 
 export default function EmptyStatePage() {
   return (
-    <div>
-      <h1 className="font-display font-bold text-4xl tracking-tight mb-2">EmptyState</h1>
-      <p className="text-ink-secondary text-sm mb-10">
-        Placeholder for empty content areas with optional CTA.
-      </p>
+    <>
+      <div className="mb-12">
+        <p className="text-xs font-body font-medium tracking-widest uppercase text-acid mb-3">
+          STATUS
+        </p>
+        <h1 className="font-display font-bold text-4xl tracking-tight text-ink-primary mb-4">
+          EmptyState
+        </h1>
+        <p className="text-ink-secondary max-w-content leading-relaxed">
+          Zero-data placeholder for empty lists and first-use screens.
+          Icon + heading + description + optional call-to-action button.
+        </p>
+      </div>
 
-      <ComponentPreview label="With Icon + CTA">
+      <ComponentPreview label="No reviews yet" className="flex-col">
+        <EmptyState
+          icon={FileSearch}
+          heading="No reviews yet"
+          description="Submit your first portfolio URL to get an AI-powered design review."
+          action={<Button variant="primary">Start a Review</Button>}
+        />
+      </ComponentPreview>
+
+      <CodeBlock
+        code={`<EmptyState
+  icon={FileSearch}
+  heading="No reviews yet"
+  description="Submit your first portfolio URL..."
+  action={<Button variant="primary">Start a Review</Button>}
+/>`}
+      />
+
+      <ComponentPreview label="Empty folder" className="flex-col">
         <EmptyState
           icon={FolderOpen}
-          heading="No portfolios yet"
-          description="Upload your first portfolio to get an AI-powered review."
-        >
-          <Button variant="primary">Upload Portfolio</Button>
-        </EmptyState>
+          heading="This folder is empty"
+          description="Saved reviews will appear here."
+        />
       </ComponentPreview>
 
-      <ComponentPreview label="Search No Results">
-        <EmptyState
-          icon={Search}
-          heading="No results found"
-          description="Try adjusting your search terms or filters."
-        >
-          <Button variant="ghost">Clear Filters</Button>
-        </EmptyState>
-      </ComponentPreview>
-
-      <CodeBlock code={`<EmptyState
+      <CodeBlock
+        code={`<EmptyState
   icon={FolderOpen}
-  heading="No portfolios yet"
-  description="Upload your first portfolio."
->
-  <Button>Upload</Button>
-</EmptyState>`} />
-    </div>
+  heading="This folder is empty"
+  description="Saved reviews will appear here."
+/>`}
+      />
+
+      <ComponentPreview label="No favorites" className="flex-col">
+        <EmptyState
+          icon={Star}
+          heading="No favorites"
+          description="Star a review to save it for quick access."
+        />
+      </ComponentPreview>
+
+      <CodeBlock
+        code={`<EmptyState
+  icon={Star}
+  heading="No favorites"
+/>`}
+      />
+    </>
   );
 }

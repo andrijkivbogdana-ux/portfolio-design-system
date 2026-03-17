@@ -1,63 +1,92 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
-  /* Brand */
-  --color-acid: 200 255 0;
-  --color-acid-dim: 176 224 0;
-  --color-mist: 167 139 250;
-  --color-mist-dim: 139 92 246;
+@theme inline {
+  /* ─── Surface scale ─── */
+  --color-surface-base: #0E0E0E;
+  --color-surface-raised: #161616;
+  --color-surface-overlay: #1E1E1E;
+  --color-surface-subtle: #252525;
 
-  /* Status */
-  --color-error: 239 68 68;
-  --color-error-dim: 220 38 38;
-  --color-success: 34 197 94;
-  --color-success-dim: 22 163 106;
-  --color-warning: 245 158 11;
-  --color-warning-dim: 217 119 6;
+  /* ─── Ink scale ─── */
+  --color-ink-primary: #F0F0F0;
+  --color-ink-secondary: #A0A0A0;
+  --color-ink-muted: #666666;
+  --color-ink-inverse: #0E0E0E;
 
-  /* Surfaces */
-  --color-surface-base: 10 10 10;
-  --color-surface-raised: 20 20 20;
-  --color-surface-overlay: 28 28 28;
-  --color-surface-subtle: 36 36 36;
+  /* ─── Accent: primary ─── */
+  --color-acid: #C8FF00;
+  --color-acid-dim: #B0E000;
 
-  /* Text */
-  --color-ink-primary: 245 245 245;
-  --color-ink-secondary: 163 163 163;
-  --color-ink-muted: 107 107 107;
-  --color-ink-inverse: 10 10 10;
+  /* ─── Accent: secondary ─── */
+  --color-mist: #A78BFA;
+  --color-mist-dim: #8B5CF6;
 
-  /* Borders */
-  --color-border: 42 42 42;
-  --color-border-strong: 64 64 64;
-  --color-border-accent: 200 255 0;
+  /* ─── Status ─── */
+  --color-error: #EF4444;
+  --color-error-dim: #DC2626;
+  --color-success: #22C55E;
+  --color-success-dim: #16A34A;
+  --color-warning: #F59E0B;
+  --color-warning-dim: #D97706;
 
-  /* Shadows */
-  --shadow-glow: 0 0 20px rgba(200, 255, 0, 0.15);
+  /* ─── Borders ─── */
+  --color-border: #2A2A2A;
+  --color-border-strong: #3A3A3A;
+  --color-border-accent: #C8FF00;
+
+  /* ─── Shadows ─── */
+  --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 24px rgba(200, 255, 0, 0.08);
+
+  /* ─── Fonts ─── */
+  --font-display: var(--font-syne), "Syne", sans-serif;
+  --font-body: var(--font-inter), "Inter", sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+
+  /* ─── Spacing: max-width tokens ─── */
+  --container-wide: 1080px;
+  --container-content: 720px;
+
+  /* ─── Durations ─── */
+  --duration-fast: 150ms;
+  --duration-DEFAULT: 300ms;
+
+  /* ─── Letter spacing ─── */
+  --tracking-tightest: -0.04em;
 }
 
-@layer base {
-  body {
-    @apply bg-surface-base text-ink-primary font-body antialiased;
-  }
+/* ─── Custom utilities ─── */
+@utility max-w-wide {
+  max-width: var(--container-wide);
 }
 
-@keyframes progress-slide {
-  0% {
-    transform: translateX(-100%);
-    width: 40%;
-  }
-  50% {
-    width: 60%;
-  }
-  100% {
-    transform: translateX(250%);
-    width: 40%;
-  }
+@utility max-w-content {
+  max-width: var(--container-content);
 }
 
-.animate-progress-slide {
-  animation: progress-slide 1.5s ease-in-out infinite;
+@utility duration-fast {
+  transition-duration: var(--duration-fast);
+}
+
+@utility tracking-tightest {
+  letter-spacing: var(--tracking-tightest);
+}
+
+/* ─── Keyframes (exceptions to GSAP rule: infinite loops) ─── */
+@keyframes slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
+}
+
+/* ─── Base styles ─── */
+html {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-surface-base);
+  color: var(--color-ink-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

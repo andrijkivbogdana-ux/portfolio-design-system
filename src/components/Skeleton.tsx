@@ -1,28 +1,39 @@
 import { cn } from "@/lib/utils";
 
-type SkeletonVariant = "text" | "circle" | "card" | "custom";
+type Variant = "text" | "circle" | "card";
 
-export interface SkeletonProps {
-  variant?: SkeletonVariant;
+interface SkeletonProps {
+  variant?: Variant;
   className?: string;
+  lines?: number;
 }
 
-const variantStyles: Record<SkeletonVariant, string> = {
-  text: "h-4 w-full rounded",
-  circle: "w-10 h-10 rounded-full",
-  card: "h-48 w-full rounded-xl",
-  custom: "",
-};
+export function Skeleton({ variant = "text", className, lines = 3 }: SkeletonProps) {
+  if (variant === "circle") {
+    return (
+      <div
+        className={cn("w-10 h-10 rounded-full bg-surface-subtle animate-pulse", className)}
+      />
+    );
+  }
 
-export function Skeleton({ variant = "text", className }: SkeletonProps) {
+  if (variant === "card") {
+    return (
+      <div
+        className={cn("h-48 w-full rounded-xl bg-surface-subtle animate-pulse", className)}
+      />
+    );
+  }
+
   return (
-    <div
-      aria-hidden="true"
-      className={cn(
-        "bg-surface-subtle animate-pulse",
-        variantStyles[variant],
-        className
-      )}
-    />
+    <div className={cn("space-y-2.5", className)}>
+      {Array.from({ length: lines }).map((_, i) => (
+        <div
+          key={i}
+          className="h-4 rounded bg-surface-subtle animate-pulse"
+          style={{ width: i === lines - 1 ? "60%" : "100%" }}
+        />
+      ))}
+    </div>
   );
 }

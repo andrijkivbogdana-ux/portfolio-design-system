@@ -2,27 +2,19 @@
 
 import { cn } from "@/lib/utils";
 
-export interface ToggleProps {
-  checked: boolean;
-  onChange: (checked: boolean) => void;
+interface ToggleProps {
+  checked?: boolean;
+  onChange?: (checked: boolean) => void;
   disabled?: boolean;
   label?: string;
-  className?: string;
 }
 
-export function Toggle({
-  checked,
-  onChange,
-  disabled = false,
-  label,
-  className,
-}: ToggleProps) {
+export function Toggle({ checked = false, onChange, disabled, label }: ToggleProps) {
   return (
     <label
       className={cn(
         "inline-flex items-center gap-2.5 cursor-pointer",
-        disabled && "opacity-40 cursor-not-allowed",
-        className
+        disabled && "opacity-40 cursor-not-allowed"
       )}
     >
       <button
@@ -30,7 +22,7 @@ export function Toggle({
         type="button"
         aria-checked={checked}
         disabled={disabled}
-        onClick={() => onChange(!checked)}
+        onClick={() => onChange?.(!checked)}
         className={cn(
           "relative w-10 h-6 rounded-full transition-all duration-fast",
           checked ? "bg-mist" : "bg-surface-subtle"

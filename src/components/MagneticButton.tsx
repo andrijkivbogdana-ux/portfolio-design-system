@@ -1,26 +1,23 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
 import { useMagnet } from "@/hooks/useMagnet";
-import { Button, type ButtonProps } from "./Button";
-import { cn } from "@/lib/utils";
 
-export interface MagneticButtonProps extends ButtonProps {
+interface MagneticButtonProps {
+  children: ReactNode;
   strength?: number;
 }
 
 export function MagneticButton({
-  strength = 0.4,
-  className,
   children,
-  ...props
+  strength = 0.4,
 }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null);
   useMagnet(ref, { strength });
 
   return (
-    <div ref={ref} className={cn("inline-block", className)}>
-      <Button {...props}>{children}</Button>
+    <div ref={ref} className="inline-block">
+      {children}
     </div>
   );
 }

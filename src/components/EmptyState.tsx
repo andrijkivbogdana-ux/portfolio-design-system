@@ -1,11 +1,12 @@
-import { type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { type LucideIcon } from "lucide-react";
+import { type ReactNode } from "react";
 
-export interface EmptyStateProps {
-  icon?: LucideIcon;
+interface EmptyStateProps {
+  icon: LucideIcon;
   heading: string;
   description?: string;
-  children?: React.ReactNode;
+  action?: ReactNode;
   className?: string;
 }
 
@@ -13,14 +14,12 @@ export function EmptyState({
   icon: Icon,
   heading,
   description,
-  children,
+  action,
   className,
 }: EmptyStateProps) {
   return (
     <div className={cn("text-center py-16", className)}>
-      {Icon && (
-        <Icon className="w-10 h-10 text-ink-muted mx-auto mb-4" />
-      )}
+      <Icon className="w-10 h-10 text-ink-muted mx-auto mb-4" strokeWidth={1.5} />
       <h3 className="font-display font-semibold text-lg tracking-tight text-ink-primary mb-2">
         {heading}
       </h3>
@@ -29,7 +28,7 @@ export function EmptyState({
           {description}
         </p>
       )}
-      {children}
+      {action}
     </div>
   );
 }

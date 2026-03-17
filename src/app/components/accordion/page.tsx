@@ -4,36 +4,78 @@ import { Accordion } from "@/components/Accordion";
 import { ComponentPreview } from "@/components/ComponentPreview";
 import { CodeBlock } from "@/components/CodeBlock";
 
-const ITEMS = [
-  { id: "1", title: "What file formats are supported?", content: "We support PDF, PNG, JPG, and Figma URLs for portfolio uploads." },
-  { id: "2", title: "How long does the review take?", content: "AI-powered reviews are generated in under 60 seconds." },
-  { id: "3", title: "Can I get a human review?", content: "Yes, you can request a human expert review after the AI analysis." },
+const singleItems = [
+  {
+    id: "layout",
+    title: "Layout & Composition",
+    content: "Your hero section follows a strong visual hierarchy. Consider adding more breathing room between the feature cards to improve scannability.",
+  },
+  {
+    id: "typography",
+    title: "Typography",
+    content: "Font pairing is solid. The body text line-height could be increased to 1.6 for better readability on longer paragraphs.",
+  },
+  {
+    id: "color",
+    title: "Color & Contrast",
+    content: "Primary accent usage is restrained and effective. The secondary text on dark backgrounds passes AA but not AAA contrast requirements.",
+  },
+];
+
+const multiItems = [
+  {
+    id: "perf",
+    title: "Performance",
+    content: "Lighthouse score: 72. Largest Contentful Paint is 3.2s. Compress hero image and defer non-critical JS.",
+  },
+  {
+    id: "a11y",
+    title: "Accessibility",
+    content: "Missing skip-to-content link. Form inputs lack associated labels. Interactive elements need visible focus indicators.",
+  },
+  {
+    id: "responsive",
+    title: "Responsive Design",
+    content: "Mobile layout breaks below 375px. Navigation hamburger menu is not keyboard accessible.",
+  },
 ];
 
 export default function AccordionPage() {
   return (
-    <div>
-      <h1 className="font-display font-bold text-4xl tracking-tight mb-2">Accordion</h1>
-      <p className="text-ink-secondary text-sm mb-10">
-        Expandable content panels with GSAP height animation.
-      </p>
+    <>
+      <div className="mb-12">
+        <p className="text-xs font-body font-medium tracking-widest uppercase text-acid mb-3">
+          FEEDBACK &amp; DATA
+        </p>
+        <h1 className="font-display font-bold text-4xl tracking-tight text-ink-primary mb-4">
+          Accordion
+        </h1>
+        <p className="text-ink-secondary max-w-content leading-relaxed">
+          Expandable sections for review feedback categories. Single mode
+          (one panel open at a time) or multiple mode. Uses GSAP for height
+          animation.
+        </p>
+      </div>
 
-      <ComponentPreview label="Single Mode (default)">
-        <div className="w-full">
-          <Accordion items={ITEMS} />
-        </div>
+      <ComponentPreview label="Single mode (default)" className="flex-col items-stretch">
+        <Accordion items={singleItems} />
       </ComponentPreview>
 
-      <ComponentPreview label="Multiple Mode">
-        <div className="w-full">
-          <Accordion items={ITEMS} multiple />
-        </div>
+      <CodeBlock
+        code={`<Accordion items={[
+  { id: "layout", title: "Layout & Composition", content: "..." },
+  { id: "typography", title: "Typography", content: "..." },
+  { id: "color", title: "Color & Contrast", content: "..." },
+]} />`}
+      />
+
+      <ComponentPreview label="Multiple mode" className="flex-col items-stretch">
+        <Accordion items={multiItems} multiple />
       </ComponentPreview>
 
-      <CodeBlock code={`<Accordion items={[
-  { id: "1", title: "Question?", content: "Answer." },
-]} />
-<Accordion items={items} multiple />`} />
-    </div>
+      <CodeBlock
+        code={`<Accordion items={items} multiple />`}
+      />
+    </>
   );
 }

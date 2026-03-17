@@ -1,70 +1,59 @@
 "use client";
 
-import { useState } from "react";
-import { Info, CheckCircle, AlertTriangle, XCircle, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Info, CheckCircle, AlertTriangle, XCircle, X } from "lucide-react";
+import { type ReactNode } from "react";
 
-type AlertVariant = "info" | "success" | "warning" | "error";
+type Status = "info" | "success" | "warning" | "error";
 
-export interface AlertProps {
-  variant?: AlertVariant;
+interface AlertProps {
+  status?: Status;
   title?: string;
-  children: React.ReactNode;
+  children: ReactNode;
   dismissible?: boolean;
   onDismiss?: () => void;
   className?: string;
 }
 
-const variantConfig: Record<
-  AlertVariant,
-  { border: string; icon: typeof Info; iconColor: string }
-> = {
-  info: { border: "border-border", icon: Info, iconColor: "text-ink-secondary" },
-  success: { border: "border-success", icon: CheckCircle, iconColor: "text-success" },
-  warning: { border: "border-warning", icon: AlertTriangle, iconColor: "text-warning" },
-  error: { border: "border-error", icon: XCircle, iconColor: "text-error" },
+const statusConfig: Record<Status, { icon: typeof Info; border: string; iconColor: string }> = {
+  info: { icon: Info, border: "border-border", iconColor: "text-ink-secondary" },
+  success: { icon: CheckCircle, border: "border-success", iconColor: "text-success" },
+  warning: { icon: AlertTriangle, border: "border-warning", iconColor: "text-warning" },
+  error: { icon: XCircle, border: "border-error", iconColor: "text-error" },
 };
 
 export function Alert({
-  variant = "info",
+  status = "info",
   title,
   children,
-  dismissible = false,
+  dismissible,
   onDismiss,
   className,
 }: AlertProps) {
-  const [visible, setVisible] = useState(true);
-  const config = variantConfig[variant];
+  const config = statusConfig[status];
   const Icon = config.icon;
-
-  if (!visible) return null;
-
-  const handleDismiss = () => {
-    setVisible(false);
-    onDismiss?.();
-  };
 
   return (
     <div
-      role="alert"
       className={cn(
-        "bg-surface-raised border rounded-xl p-4 flex items-start gap-3",
+        "bg-surface-raised border rounded-xl p-4 flex items-start gap-3 relative",
         config.border,
         className
       )}
     >
-      <Icon className={cn("w-5 h-5 flex-shrink-0 mt-0.5", config.iconColor)} />
+      <Icon className={cn("w-5 h-5 shrink-0 mt-0.5", config.iconColor)} strokeWidth={1.5} />
       <div className="flex-1 min-w-0">
         {title && (
-          <p className="text-sm font-body font-medium text-ink-primary">{title}</p>
+          <p className="text-sm font-body font-medium text-ink-primary mb-0.5">
+            {title}
+          </p>
         )}
         <div className="text-sm font-body text-ink-secondary">{children}</div>
       </div>
       {dismissible && (
         <button
-          onClick={handleDismiss}
-          className="flex-shrink-0 text-ink-muted hover:text-ink-primary"
-          aria-label="Dismiss alert"
+          onClick={onDismiss}
+          className="text-ink-muted hover:text-ink-primary transition-colors duration-fast shrink-0"
         >
           <X className="w-4 h-4" />
         </button>

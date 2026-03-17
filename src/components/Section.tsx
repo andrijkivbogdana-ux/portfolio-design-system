@@ -1,24 +1,22 @@
 import { cn } from "@/lib/utils";
+import { type HTMLAttributes } from "react";
 
-export interface SectionProps {
-  id?: string;
+interface SectionProps extends HTMLAttributes<HTMLElement> {
   eyebrow?: string;
   heading?: string;
   narrow?: boolean;
-  className?: string;
-  children: React.ReactNode;
 }
 
 export function Section({
-  id,
   eyebrow,
   heading,
-  narrow = false,
+  narrow,
   className,
   children,
+  ...props
 }: SectionProps) {
   return (
-    <section id={id} className={cn("py-24", className)}>
+    <section className={cn("py-16 md:py-24", className)} {...props}>
       <div className="max-w-full px-6 md:px-10 lg:px-16">
         <div className={cn(narrow ? "max-w-content mx-auto" : "max-w-wide mx-auto")}>
           {eyebrow && (
@@ -27,7 +25,7 @@ export function Section({
             </p>
           )}
           {heading && (
-            <h2 className="font-display font-bold text-5xl tracking-tight text-ink-primary mb-10">
+            <h2 className="font-display font-bold text-4xl md:text-5xl tracking-tight text-ink-primary mb-12">
               {heading}
             </h2>
           )}

@@ -4,30 +4,69 @@ import { Tabs } from "@/components/Tabs";
 import { ComponentPreview } from "@/components/ComponentPreview";
 import { CodeBlock } from "@/components/CodeBlock";
 
-const TAB_ITEMS = [
-  { id: "overview", label: "Overview", content: <p className="text-sm text-ink-secondary">Overview content for the portfolio review. Includes summary scores and key insights.</p> },
-  { id: "details", label: "Details", content: <p className="text-sm text-ink-secondary">Detailed analysis of each portfolio piece including layout, typography, and color usage.</p> },
-  { id: "suggestions", label: "Suggestions", content: <p className="text-sm text-ink-secondary">Actionable suggestions for improving your portfolio based on industry standards.</p> },
+const reviewTabs = [
+  {
+    id: "overview",
+    label: "Overview",
+    content: (
+      <p className="text-sm text-ink-secondary">
+        Overall score and summary of the portfolio review. Includes top-level metrics for layout, typography, color, and accessibility.
+      </p>
+    ),
+  },
+  {
+    id: "details",
+    label: "Details",
+    content: (
+      <p className="text-sm text-ink-secondary">
+        Detailed breakdown of each review category with specific recommendations and examples.
+      </p>
+    ),
+  },
+  {
+    id: "history",
+    label: "History",
+    content: (
+      <p className="text-sm text-ink-secondary">
+        Previous review versions and score changes over time.
+      </p>
+    ),
+  },
 ];
 
 export default function TabsPage() {
   return (
-    <div>
-      <h1 className="font-display font-bold text-4xl tracking-tight mb-2">Tabs</h1>
-      <p className="text-ink-secondary text-sm mb-10">
-        Tabbed content navigation with CSS transitions.
-      </p>
+    <>
+      <div className="mb-12">
+        <p className="text-xs font-body font-medium tracking-widest uppercase text-acid mb-3">
+          OVERLAYS &amp; NAV
+        </p>
+        <h1 className="font-display font-bold text-4xl tracking-tight text-ink-primary mb-4">
+          Tabs
+        </h1>
+        <p className="text-ink-secondary max-w-content leading-relaxed">
+          Content section switcher for organizing review data. Horizontal
+          layout with an acid underline indicator on the active tab.
+        </p>
+      </div>
 
-      <ComponentPreview label="Default">
-        <div className="w-full">
-          <Tabs items={TAB_ITEMS} />
-        </div>
+      <ComponentPreview label="Default" className="flex-col items-stretch">
+        <Tabs tabs={reviewTabs} />
       </ComponentPreview>
 
-      <CodeBlock code={`<Tabs items={[
-  { id: "overview", label: "Overview", content: <p>...</p> },
-  { id: "details", label: "Details", content: <p>...</p> },
-]} />`} />
-    </div>
+      <CodeBlock
+        code={`<Tabs tabs={[
+  { id: "overview", label: "Overview", content: <Overview /> },
+  { id: "details", label: "Details", content: <Details /> },
+  { id: "history", label: "History", content: <History /> },
+]} />`}
+      />
+
+      <ComponentPreview label="With default tab" className="flex-col items-stretch">
+        <Tabs tabs={reviewTabs} defaultTab="details" />
+      </ComponentPreview>
+
+      <CodeBlock code={`<Tabs tabs={tabs} defaultTab="details" />`} />
+    </>
   );
 }

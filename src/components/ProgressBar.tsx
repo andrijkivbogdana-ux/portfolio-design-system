@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-export interface ProgressBarProps {
+interface ProgressBarProps {
   value?: number;
   indeterminate?: boolean;
   className?: string;
@@ -13,20 +13,20 @@ export function ProgressBar({
 }: ProgressBarProps) {
   return (
     <div
-      role="progressbar"
-      aria-valuenow={indeterminate ? undefined : value}
-      aria-valuemin={0}
-      aria-valuemax={100}
-      className={cn("h-2 w-full bg-surface-subtle rounded-full overflow-hidden", className)}
-    >
-      {indeterminate ? (
-        <div className="h-full bg-acid rounded-full animate-progress-slide" />
-      ) : (
-        <div
-          className="h-full bg-acid rounded-full transition-all duration-DEFAULT"
-          style={{ width: `${Math.min(100, Math.max(0, value))}%` }}
-        />
+      className={cn(
+        "h-2 w-full bg-surface-subtle rounded-full overflow-hidden",
+        className
       )}
+    >
+      <div
+        className={cn(
+          "h-full bg-acid rounded-full",
+          indeterminate
+            ? "animate-[slide_1.5s_ease-in-out_infinite] w-1/3"
+            : "transition-all duration-300"
+        )}
+        style={indeterminate ? undefined : { width: `${Math.min(100, value)}%` }}
+      />
     </div>
   );
 }

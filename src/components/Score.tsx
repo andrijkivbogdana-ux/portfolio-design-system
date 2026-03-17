@@ -1,95 +1,81 @@
 import { cn } from "@/lib/utils";
 
-type ScoreVariant = "ring" | "bar";
-
-export interface ScoreProps {
+interface ScoreProps {
   value: number;
   max?: number;
-  variant?: ScoreVariant;
+  variant?: "ring" | "bar";
   label?: string;
   className?: string;
 }
 
-function getScoreColor(score: number, max: number) {
-  const normalized = (score / max) * 10;
-  if (normalized >= 7) return "text-acid";
-  if (normalized >= 4) return "text-warning";
-  return "text-error";
+function getScoreColor(value: number, max: number) {
+  const pct = value / max;
+  if (pct >= 0.7) return { stroke: "stroke-acid", bg: "bg-acid", text: "text-acid" };
+  if (pct >= 0.4) return { stroke: "stroke-warning", bg: "bg-warning", text: "text-warning" };
+  return { stroke: "stroke-error", bg: "bg-error", text: "text-error" };
 }
 
-function getBarColor(score: number, max: number) {
-  const normalized = (score / max) * 10;
-  if (normalized >= 7) return "bg-acid";
-  if (normalized >= 4) return "bg-warning";
-  return "bg-error";
-}
-
-export function Score({
-  value,
-  max = 10,
-  variant = "ring",
-  label,
-  className,
-}: ScoreProps) {
-  const percent = (value / max) * 100;
-
-  if (variant === "bar") {
-    return (
-      <div className={cn("space-y-1.5", className)}>
-        {label && (
-          <div className="flex justify-between items-center">
-            <span className="text-xs font-body text-ink-muted">{label}</span>
-            <span className={cn("text-xs font-body font-medium", getScoreColor(value, max))}>
-              {value}/{max}
-            </span>
-          </div>
-        )}
-        <div className="h-2 w-full bg-surface-subtle rounded-full overflow-hidden">
-          <div
-            className={cn("h-full rounded-full transition-all duration-DEFAULT", getBarColor(value, max))}
-            style={{ width: `${percent}%` }}
-          />
-        </div>
-      </div>
-    );
-  }
-
+function ScoreRing({ value, max = 10, label, className }: ScoreProps) {
+  const pct = value / max;
   const radius = 24;
   const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - (percent / 100) * circumference;
+  const offset = circumference * (1 - pct);
+  const color = getScoreColor(value, max);
 
   return (
-    <div className={cn("flex flex-col items-center gap-1", className)}>
-      <div className="relative w-16 h-16">
-        <svg className="w-16 h-16 -rotate-90" viewBox="0 0 56 56">
-          <circle
-            cx="28"
-            cy="28"
-            r={radius}
-            fill="none"
-            stroke="rgb(var(--color-border))"
-            strokeWidth="4"
-          />
-          <circle
-            cx="28"
-            cy="28"
-            r={radius}
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="4"
-            strokeLinecap="round"
-            strokeDasharray={circumference}
-            strokeDashoffset={strokeDashoffset}
-            className={getScoreColor(value, max)}
-          />
-        </svg>
-        <span className="absolute inset-0 flex items-center justify-center font-display font-bold text-lg text-ink-primary">
-          {value}
-        </span>
-      </div>
+    <div className={cn("flex flex-col items-center gap-1.5", className)}>
+      <svg width={64} height={64} viewBox="0 0 64 64" className="-rotate-90">
+        <circle
+          cx={32} cy={32} r={radius}
+          fill="none" strokeWidth={4}
+          className="stroke-surface-subtle"
+        />
+        <circle
+          cx={32} cy={32} r={radius}
+          fill="none" strokeWidth={4}
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          strokeLinecap="round"
+          className={cn(color.stroke, "transition-all duration-300")}
+        />
+      </svg>
+      <span className="absolute font-display font-bold text-lg text-ink-primary">
+        {value}
+      </span>
+      {label && <p className="text-xs text-ink-muted">{label}</p>}
+    </div>
+  );
+}
+
+function ScoreBar({ value, max = 10, label, className }: ScoreProps) {
+  const pct = (value / max) * 100;
+  const color = getScoreColor(value, max);
+
+  return (
+    <div className={cn("w-full", className)}>
       {label && (
-        <span className="text-xs font-body text-ink-muted">{label}</span>
+        <div className="flex justify-between items-center mb-1.5">
+          <span className="text-sm font-body text-ink-primary">{label}</span>
+          <span className={cn("text-sm font-body font-medium", color.text)}>
+            {value}/{max}
+          </span>
+        </div>
       )}
+      <div className="h-2 w-full bg-surface-subtle rounded-full overflow-hidden">
+        <div
+          className={cn("h-full rounded-full transition-all duration-300", color.bg)}
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+
+export function Score({ variant = "ring", ...props }: ScoreProps) {
+  if (variant === "bar") return <ScoreBar {...props} />;
+  return (
+    <div className="relative flex items-center justify-center">
+      <ScoreRing {...props} />
     </div>
   );
 }

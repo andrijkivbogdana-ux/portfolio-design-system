@@ -4,34 +4,51 @@ import { CodeBlock } from "@/components/CodeBlock";
 
 export default function SectionPage() {
   return (
-    <div>
-      <h1 className="font-display font-bold text-4xl tracking-tight mb-2">Section</h1>
-      <p className="text-ink-secondary text-sm mb-10">
-        Layout wrapper with eyebrow label and heading.
-      </p>
+    <>
+      <div className="mb-12">
+        <p className="text-xs font-body font-medium tracking-widest uppercase text-acid mb-3">
+          COMPONENTS
+        </p>
+        <h1 className="font-display font-bold text-4xl tracking-tight text-ink-primary mb-4">
+          Section
+        </h1>
+        <p className="text-ink-secondary max-w-content leading-relaxed">
+          Page section wrapper with optional eyebrow, heading, and narrow mode.
+          Handles container, padding, and max-width automatically.
+        </p>
+      </div>
 
-      <ComponentPreview label="With Eyebrow + Heading">
-        <div className="w-full bg-surface-base rounded-xl overflow-hidden">
-          <Section eyebrow="Features" heading="What We Offer" className="py-12">
-            <p className="text-sm text-ink-secondary">Section content goes here.</p>
-          </Section>
-        </div>
+      <ComponentPreview
+        label="With eyebrow + heading"
+        className="flex-col items-stretch bg-surface-base"
+      >
+        <Section eyebrow="Features" heading="How it works">
+          <p className="text-ink-secondary">Section content goes here.</p>
+        </Section>
       </ComponentPreview>
 
-      <ComponentPreview label="Narrow">
-        <div className="w-full bg-surface-base rounded-xl overflow-hidden">
-          <Section eyebrow="About" heading="Our Story" narrow className="py-12">
-            <p className="text-sm text-ink-secondary">Narrow section for text-heavy content (720px max).</p>
-          </Section>
-        </div>
+      <CodeBlock
+        code={`<Section eyebrow="Features" heading="How it works">
+  <p>Section content goes here.</p>
+</Section>`}
+      />
+
+      <ComponentPreview
+        label="Narrow (720px max-width)"
+        className="flex-col items-stretch bg-surface-base"
+      >
+        <Section narrow heading="Centered content">
+          <p className="text-ink-secondary text-center">
+            Narrow sections are ideal for text-heavy content blocks.
+          </p>
+        </Section>
       </ComponentPreview>
 
-      <CodeBlock code={`<Section eyebrow="FEATURES" heading="What We Offer">
-  <p>Content</p>
-</Section>
-<Section eyebrow="ABOUT" heading="Our Story" narrow>
-  <p>Narrow text content</p>
-</Section>`} />
-    </div>
+      <CodeBlock
+        code={`<Section narrow heading="Centered content">
+  <p>Narrow sections are ideal for text-heavy content.</p>
+</Section>`}
+      />
+    </>
   );
 }

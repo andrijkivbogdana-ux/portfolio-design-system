@@ -1,39 +1,33 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, type ReactNode } from "react";
 import gsap from "gsap";
-import { EASE, DURATION } from "@/lib/animations";
-import { cn } from "@/lib/utils";
+import { easings } from "@/lib/animations";
 
-export interface TextRevealProps {
-  children: React.ReactNode;
+interface TextRevealProps {
+  children: ReactNode;
   delay?: number;
-  className?: string;
 }
 
-export function TextReveal({ children, delay = 0, className }: TextRevealProps) {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
+export function TextReveal({ children, delay = 0 }: TextRevealProps) {
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!innerRef.current) return;
+    const el = ref.current;
+    if (!el) return;
 
-    gsap.fromTo(
-      innerRef.current,
-      { y: "100%", opacity: 0 },
-      {
-        y: "0%",
-        opacity: 1,
-        duration: DURATION.default,
-        ease: EASE.snappy,
-        delay,
-      }
-    );
+    gsap.from(el, {
+      y: "100%",
+      opacity: 0,
+      duration: 0.8,
+      delay,
+      ease: easings.smooth,
+    });
   }, [delay]);
 
   return (
-    <div ref={wrapperRef} className={cn("overflow-hidden", className)}>
-      <div ref={innerRef}>{children}</div>
+    <div className="overflow-hidden">
+      <div ref={ref}>{children}</div>
     </div>
   );
 }

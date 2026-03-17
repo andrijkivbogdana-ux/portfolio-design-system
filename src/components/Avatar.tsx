@@ -1,17 +1,17 @@
-import Image from "next/image";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
-type AvatarSize = "sm" | "md" | "lg";
+type Size = "sm" | "md" | "lg";
 
-export interface AvatarProps {
+interface AvatarProps {
   src?: string;
   alt?: string;
-  fallback?: string;
-  size?: AvatarSize;
+  initials?: string;
+  size?: Size;
   className?: string;
 }
 
-const sizeStyles: Record<AvatarSize, { container: string; text: string; px: number }> = {
+const sizes: Record<Size, { container: string; text: string; px: number }> = {
   sm: { container: "w-8 h-8", text: "text-xs", px: 32 },
   md: { container: "w-10 h-10", text: "text-sm", px: 40 },
   lg: { container: "w-14 h-14", text: "text-lg", px: 56 },
@@ -20,16 +20,16 @@ const sizeStyles: Record<AvatarSize, { container: string; text: string; px: numb
 export function Avatar({
   src,
   alt = "",
-  fallback,
+  initials,
   size = "md",
   className,
 }: AvatarProps) {
-  const s = sizeStyles[size];
+  const s = sizes[size];
 
   return (
     <div
       className={cn(
-        "rounded-full overflow-hidden bg-surface-subtle flex items-center justify-center",
+        "rounded-full overflow-hidden bg-surface-subtle flex items-center justify-center shrink-0",
         s.container,
         className
       )}
@@ -44,7 +44,7 @@ export function Avatar({
         />
       ) : (
         <span className={cn("font-body font-medium text-ink-secondary", s.text)}>
-          {fallback ?? "?"}
+          {initials || "?"}
         </span>
       )}
     </div>
